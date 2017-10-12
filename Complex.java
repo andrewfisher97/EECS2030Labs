@@ -11,10 +11,10 @@ import java.util.List;
  */
 public final class Complex {
 	
-	private static final Complex I = new Complex(0, 1);
-	private static final Complex ONE = new Complex(1, 0);
-	private double re;
-	private double im;
+	private final double re;
+	private final double im;
+	static final Complex I = new Complex(0.0, 1.0);
+	static final Complex ONE = new Complex(1.0, 0.0);
 
 	/**
 	 * Initializes this complex number to <code>0 + 0i</code>.
@@ -33,8 +33,8 @@ public final class Complex {
 	 *            the complex number to copy.
 	 */
 	public Complex(Complex other) {
-		re = other.re;
-		im = other.im;
+		this.re = other.re;
+		this.im = other.im;
 	}
 
 	/**
@@ -211,8 +211,11 @@ public final class Complex {
 	 */
 	@Override
 	public String toString() {
-		
-		return "";
+		if (im >= 0) {
+			return re + " + " + Math.abs(im) + "i";
+		} else {
+			return re + " - " + Math.abs(im) + "i";
+		}
 	}
 
 	/**
