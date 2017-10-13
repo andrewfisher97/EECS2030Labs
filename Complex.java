@@ -169,7 +169,7 @@ public final class Complex {
 	@Override
 	public int hashCode() {
 		
-		return 0;
+		return (int) ((9999.0 * re) + (99.0 * im));
 	}
 
 	/**
