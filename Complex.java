@@ -11,17 +11,18 @@ import java.util.List;
  */
 public final class Complex {
 	
+	public static final Complex ONE = new Complex(1.0, 0.0);
+	public static final Complex I = new Complex(0.0, 1.0);
+	
 	private final double re;
 	private final double im;
-	static final Complex ONE = new Complex(1.0, 0.0);
-	static final Complex I = new Complex(0.0, 1.0);
 
 	/**
 	 * Initializes this complex number to <code>0 + 0i</code>.
 	 * 
 	 */
 	public Complex() {
-		this(0, 0);
+		this(0.0, 0.0);
 	}
 
 	/**
@@ -59,8 +60,8 @@ public final class Complex {
 	 *         imaginary part is equal to 0.0
 	 */
 	public static Complex real(double re) {
-		
-		return null;
+		Complex newComplex = new Complex(re, 0.0);
+		return newComplex;
 	}
 
 	/**
@@ -73,8 +74,8 @@ public final class Complex {
 	 *         imaginary part is equal to im
 	 */
 	public static Complex imag(double im) {
-		
-		return null;
+		Complex newComplex = new Complex(0.0, im);
+		return newComplex;
 	}
 
 	/**
@@ -83,8 +84,7 @@ public final class Complex {
 	 * @return the real part of the complex number.
 	 */
 	public double re() {
-		
-		return 0.0;
+		return re;
 	}
 
 	/**
@@ -93,8 +93,7 @@ public final class Complex {
 	 * @return the imaginary part of the complex number.
 	 */
 	public double im() {
-		
-		return 0.0;
+		return im;
 	}
 
 	/**
@@ -168,7 +167,6 @@ public final class Complex {
 	 */
 	@Override
 	public int hashCode() {
-		
 		return (int) ((9999.0 * re) + (99.0 * im));
 	}
 
@@ -184,8 +182,11 @@ public final class Complex {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		
-		return true;
+		if (this == obj) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
