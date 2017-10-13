@@ -39,7 +39,7 @@ public class MandelbrotUtil {
 			return 1;
 		}
 		while (z.mag() <= 2) {
-			z = (z.multiply(z)).add(c);
+			z = z.multiply(z).add(c);
 			iterations++;
 			if (max == iterations) {
 				return max;
