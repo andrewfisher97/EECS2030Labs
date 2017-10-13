@@ -13,16 +13,16 @@ public final class Complex {
 	
 	private final double re;
 	private final double im;
-	static final Complex I = new Complex(0.0, 1.0);
 	static final Complex ONE = new Complex(1.0, 0.0);
+	static final Complex I = new Complex(0.0, 1.0);
 
 	/**
 	 * Initializes this complex number to <code>0 + 0i</code>.
 	 * 
 	 */
 	public Complex() {
-		this.re = 0;
-		this.im = 0;
+		re = 0;
+		im = 0;
 	}
 
 	/**
@@ -33,8 +33,8 @@ public final class Complex {
 	 *            the complex number to copy.
 	 */
 	public Complex(Complex other) {
-		this.re = other.re;
-		this.im = other.im;
+		re = other.re;
+		im = other.im;
 	}
 
 	/**
