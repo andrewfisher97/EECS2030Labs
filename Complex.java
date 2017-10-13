@@ -21,8 +21,7 @@ public final class Complex {
 	 * 
 	 */
 	public Complex() {
-		re = 0;
-		im = 0;
+		this(0, 0);
 	}
 
 	/**
@@ -33,8 +32,7 @@ public final class Complex {
 	 *            the complex number to copy.
 	 */
 	public Complex(Complex other) {
-		re = other.re;
-		im = other.im;
+		this(other.re, other.im);
 	}
 
 	/**
