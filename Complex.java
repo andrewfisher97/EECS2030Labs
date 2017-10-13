@@ -60,8 +60,8 @@ public final class Complex {
 	 *         imaginary part is equal to 0.0
 	 */
 	public static Complex real(double re) {
-		Complex newComplex = new Complex(re, 0.0);
-		return newComplex;
+		Complex real = new Complex(re, 0.0);
+		return real;
 	}
 
 	/**
@@ -74,8 +74,8 @@ public final class Complex {
 	 *         imaginary part is equal to im
 	 */
 	public static Complex imag(double im) {
-		Complex newComplex = new Complex(0.0, im);
-		return newComplex;
+		Complex imag = new Complex(0.0, im);
+		return imag;
 	}
 
 	/**
@@ -107,8 +107,8 @@ public final class Complex {
 	 *         c.
 	 */
 	public Complex add(Complex c) {
-		
-		return null;
+		Complex add = new Complex(re + c.re, im + c.im);
+		return add;
 	}
 
 	/**
@@ -128,8 +128,8 @@ public final class Complex {
 	 *         c.
 	 */
 	public Complex multiply(Complex c) {
-		
-		return null;
+		Complex mult = new Complex((re * c.re) - (im * c.im), (im * c.re) + (re * c.im));
+		return mult;
 	}
 
 	/**
@@ -138,8 +138,7 @@ public final class Complex {
 	 * @return the magnitude of this complex number.
 	 */
 	public double mag() {
-		
-		return 0.0;
+		return Math.hypot(re, im);
 	}
 
 	/**
@@ -182,11 +181,7 @@ public final class Complex {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		} else {
-			return false;
-		}
+		return true;
 	}
 
 	/**
