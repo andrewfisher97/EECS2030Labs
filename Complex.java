@@ -181,7 +181,20 @@ public final class Complex {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		return true;
+		if (obj == this) {
+			return true;
+		} else if (!(obj instanceof Complex)) {
+			return false;
+		}
+		
+		Complex test = (Complex) obj;
+		if (re == test.re && im == test.im) {
+			return true;
+		} else {
+			return false;
+		}
+		
+		// return Double.compare(re, test.re) == 0 && Double.compare(im, test.im) == 0;
 	}
 
 	/**
@@ -264,9 +277,15 @@ public final class Complex {
 		//  is stored as the second element of parts
 		// -once you account for the sign, you can return the correct
 		//  complex number
-		
-		
-		
+		if(parts.size() != 3 || parts.get(1) != "+" || parts.get(1) != "-" || !parts.get(2).contains("i")) {
+			throw new IllegalArgumentException();
+		}
+		try {
+			double elem0 = Double.valueOf(parts.get(0));
+			String elem2 = parts.get(2);
+		} catch (NumberFormatException e) {
+			System.out.println("Not a complex number.");
+		}
 		return result;
 	}
 
