@@ -188,13 +188,12 @@ public final class Complex {
 		}
 		
 		Complex test = (Complex) obj;
+		
 		if (re == test.re && im == test.im) {
 			return true;
 		} else {
 			return false;
 		}
-		
-		// return Double.compare(re, test.re) == 0 && Double.compare(im, test.im) == 0;
 	}
 
 	/**
@@ -277,16 +276,32 @@ public final class Complex {
 		//  is stored as the second element of parts
 		// -once you account for the sign, you can return the correct
 		//  complex number
-		if(parts.size() != 3 || parts.get(1) != "+" || parts.get(1) != "-" || !parts.get(2).contains("i")) {
-			throw new IllegalArgumentException();
+		
+		double real;
+		double imag;
+		if (parts.size() == 3 && (parts.get(1).equals("+") || parts.get(1).equals("-"))) {
+			String third = parts.get(2);
+			if (third.contains("i")) {
+				char[] thirdRay = third.toCharArray();
+				third = "";
+				for (int i = 0; i < thirdRay.length - 1; i++) {
+					third += thirdRay[i];
+				}
+				System.out.println(parts.get(1));
+				real = Double.valueOf(parts.get(0));
+				if (parts.get(1).equals("-")) {
+					imag = -1 * Double.valueOf(third);
+				} else {
+					imag = Double.valueOf(third);
+				}
+				result = new Complex(real, imag);					
+			} else {
+				throw new IllegalArgumentException("String is not a complex number!");
+			}
+		} else {
+			throw new IllegalArgumentException("String is not a complex number!");
 		}
-		try {
-			double elem0 = Double.valueOf(parts.get(0));
-			String elem2 = parts.get(2);
-		} catch (NumberFormatException e) {
-			System.out.println("Not a complex number.");
-		}
+		System.out.println(result.toString());
 		return result;
 	}
-
 }
