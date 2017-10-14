@@ -248,44 +248,28 @@ public final class Complex {
 		Complex result = null;
 		String t = s.trim();
 		List<String> parts = Arrays.asList(t.split("\\s+"));
-		
-		// split splits the string s by looking for spaces in s.
-		// If s is a string that might be interpreted as a complex number
-		// then parts will be a list having 3 elements. The first
-		// element will be a real number, the second element will be
-		// a plus or minus sign, and the third element will be a real
-		// number followed immediately by an i.
-		//
-		// To complete the implementation of this method you need
-		// to do the following:
-		//
-		// -check if parts has 3 elements
-		// -check if the second element of parts is "+" or "-"
-		// -check if the third element of parts ends with an "i"
-		// -if any of the 3 checks are false then s isn't a complex number
-		//  and you should throw an exception
-		// -if all of the 3 checks are true then s might a complex number
-		// -try to convert the first element of parts to a double value
-		//  (use Double.valueOf); this might fail in which case s isn't
-		//  a complex number
-		// -remove the 'i' from the third element of parts and try
-		//  to convert the resulting string to a double value
-	    //  (use Double.valueOf); this might fail in which case s isn't
-		//  a complex number
-		// -you now have real and imaginary parts of the complex number
-		//  but you still have to account for the "+" or "-" which
-		//  is stored as the second element of parts
-		// -once you account for the sign, you can return the correct
-		//  complex number
-		if(parts.size() != 3 || parts.get(1) != "+" || parts.get(1) != "-" || !parts.get(2).contains("i")) {
-			throw new IllegalArgumentException();
+		 double real;
+		double imag;
+		if (parts.size()  == 3)
+		{
+			if (parts.get(1) == "+" || parts.get(1) == "-")
+			{	String third= parts.get(2);
+				if (third.contains("i"))
+				{	real = Double.valueOf(parts.get(0));
+					imag = Double.valueOf(third.length()-1); //unsure of this implementation
+					result = new Complex(real, imag);					
+				}
+				else {
+					throw new IllegalArgumentException("String is not a complex number!");
+				}
+			}
+			else {
+				throw new IllegalArgumentException("String is not a complex number!");
+			}
 		}
-		try {
-			double elem0 = Double.valueOf(parts.get(0));
-			String elem2 = parts.get(2);
-		} catch (NumberFormatException e) {
-			System.out.println("Not a complex number.");
-		}
+		else {
+			throw new IllegalArgumentException("String is not a complex number!");
+		}	
 		return result;
 	}
 
