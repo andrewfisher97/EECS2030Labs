@@ -91,7 +91,10 @@ public class Die {
 		if (faces.length <= 0) {
 			throw new IllegalArgumentException();
 		} else {
-			valueMap = new SortedMap<Integer, String>(faces.length, faces);
+			valueMap = new TreeMap<Integer, String>();
+			for (int i = 0; i < faces.length; i++) {
+				valueMap.put(i, faces[i]);
+			}
 		}
 	}
 
@@ -106,7 +109,7 @@ public class Die {
 	 *            the die to copy
 	 */
 	public Die(Die other) {
-		this(other.valueMap);
+		this(other.valueMap<String>);
 	}
 
 	/**
@@ -116,7 +119,7 @@ public class Die {
 	 */
 	public int getNumberOfFaces() {
 		
-		
+		return 0;
 	}
 
 	/**
@@ -136,7 +139,7 @@ public class Die {
 	 */
 	public String getValue() {
 		
-		
+		return "";
 	}
 
 	/**
@@ -170,7 +173,7 @@ public class Die {
 	 */
 	public SortedMap<Integer, String> getValueMap() {
 		
-		
+		return valueMap;
 	}
 
 	/**
@@ -184,7 +187,7 @@ public class Die {
 	@Override
 	public int hashCode() {
 		
-		
+		return 1;
 	}
 
 	/**
@@ -268,7 +271,7 @@ public class Die {
 	@Override
 	public boolean equals(Object obj) {
 		
-		
+		return true;
 	}
 
 	/**
@@ -295,7 +298,7 @@ public class Die {
 	@Override
 	public String toString() {
 		
-		
+		return "";
 	}
 
 }
