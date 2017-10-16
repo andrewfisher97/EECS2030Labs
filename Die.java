@@ -118,8 +118,12 @@ public class Die {
 	 * @return the number of faces that this die has
 	 */
 	public int getNumberOfFaces() {
-		
-		return 0;
+		int numFace;
+		String[] faces = new String[];
+		for (int i = 0; i < faces.length; i++){
+			numFace++;
+		}
+		return numFace;
 	}
 
 	/**
