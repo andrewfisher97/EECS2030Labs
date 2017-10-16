@@ -53,7 +53,6 @@ import java.util.Random;
 public class Die {
 
 	private SortedMap<Integer, String> valueMap;
-	
 
 	/**
 	 * Initializes an n-sided die where the sides are decorated with the strings in
@@ -89,8 +88,13 @@ public class Die {
 	 * 
 	 */
 	public Die(String[] faces) {
-		if (faces.length == 0){
+		if (faces.length <= 0) {
 			throw new IllegalArgumentException();
+		} else {
+			valueMap = new TreeMap<Integer, String>();
+			for (int i = 0; i < faces.length; i++) {
+				valueMap.put(i, faces[i]);
+			}
 		}
 	}
 
@@ -105,8 +109,7 @@ public class Die {
 	 *            the die to copy
 	 */
 	public Die(Die other) {
-		
-		
+		this(other.valueMap<String>);
 	}
 
 	/**
@@ -116,12 +119,11 @@ public class Die {
 	 */
 	public int getNumberOfFaces() {
 		int numFace;
-		String[] faces = new 
+		String[] faces = new String[];
 		for (int i = 0; i < faces.length; i++){
 			numFace++;
 		}
 		return numFace;
-		
 	}
 
 	/**
@@ -131,7 +133,7 @@ public class Die {
 	 */
 	public String roll() {
 		
-		
+		return "";
 	}
 
 	/**
@@ -141,7 +143,7 @@ public class Die {
 	 */
 	public String getValue() {
 		
-		
+		return "";
 	}
 
 	/**
@@ -175,7 +177,7 @@ public class Die {
 	 */
 	public SortedMap<Integer, String> getValueMap() {
 		
-		
+		return valueMap;
 	}
 
 	/**
@@ -189,7 +191,7 @@ public class Die {
 	@Override
 	public int hashCode() {
 		
-		
+		return 1;
 	}
 
 	/**
@@ -273,7 +275,7 @@ public class Die {
 	@Override
 	public boolean equals(Object obj) {
 		
-		
+		return true;
 	}
 
 	/**
@@ -300,7 +302,7 @@ public class Die {
 	@Override
 	public String toString() {
 		
-		
+		return "";
 	}
 
 }
