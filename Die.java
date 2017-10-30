@@ -93,7 +93,7 @@ public class Die {
 		} else {
 			valueMap = new TreeMap<Integer, String>();
 			for (int i = 0; i < faces.length; i++) {
-				valueMap.put(i, faces[i]);
+				valueMap.put(i + 1, faces[i]);
 			}
 		}
 	}
@@ -109,7 +109,7 @@ public class Die {
 	 *            the die to copy
 	 */
 	public Die(Die other) {
-		this(other.valueMap<String>);
+		this((String[]) other.getValueMap().values().toArray());
 	}
 
 	/**
@@ -118,12 +118,7 @@ public class Die {
 	 * @return the number of faces that this die has
 	 */
 	public int getNumberOfFaces() {
-		int numFace;
-		String[] faces = new String[];
-		for (int i = 0; i < faces.length; i++){
-			numFace++;
-		}
-		return numFace;
+		return valueMap.lastKey();
 	}
 
 	/**
@@ -132,8 +127,8 @@ public class Die {
 	 * @return the string on face after rolling the die
 	 */
 	public String roll() {
-		
-		return "";
+		double rand = Math.random() * getNumberOfFaces();
+		return valueMap.get((int) rand);
 	}
 
 	/**
@@ -176,8 +171,8 @@ public class Die {
 	 * @return a sorted map of the faces to letters
 	 */
 	public SortedMap<Integer, String> getValueMap() {
-		
-		return valueMap;
+		SortedMap<Integer, String> copy = valueMap;
+		return copy;
 	}
 
 	/**
