@@ -5,6 +5,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
+
+import eecs2030.lab3.Complex;
+import ltTest2.Temperature;
+
 import java.util.Random;
 
 /**
@@ -53,6 +57,8 @@ import java.util.Random;
 public class Die {
 
 	private SortedMap<Integer, String> valueMap;
+	
+	
 
 	/**
 	 * Initializes an n-sided die where the sides are decorated with the strings in
@@ -93,9 +99,10 @@ public class Die {
 		} else {
 			valueMap = new TreeMap<Integer, String>();
 			for (int i = 0; i < faces.length; i++) {
-				valueMap.put(i, faces[i]);
+				valueMap.put(i + 1, faces[i]);
 			}
 		}
+		
 	}
 
 	/**
@@ -109,7 +116,8 @@ public class Die {
 	 *            the die to copy
 	 */
 	public Die(Die other) {
-		this(other.valueMap<String>);
+		
+		this((String[]) other.getValueMap().values().toArray());;
 	}
 
 	/**
@@ -118,12 +126,8 @@ public class Die {
 	 * @return the number of faces that this die has
 	 */
 	public int getNumberOfFaces() {
-		int numFace;
-		String[] faces = new String[];
-		for (int i = 0; i < faces.length; i++){
-			numFace++;
-		}
-		return numFace;
+		
+		return 0;
 	}
 
 	/**
@@ -132,8 +136,10 @@ public class Die {
 	 * @return the string on face after rolling the die
 	 */
 	public String roll() {
+		Random rnd = new Random();
+		int random = rnd.nextInt((valueMap.lastKey() - valueMap.firstKey()) + 1) + valueMap.firstKey();
+			return valueMap.get(random);
 		
-		return "";
 	}
 
 	/**
@@ -142,8 +148,8 @@ public class Die {
 	 * @return the string corresponding to the current face value of the die
 	 */
 	public String getValue() {
-		
-		return "";
+		SortedMap<Integer, String> copy = valueMap;
+		return copy.toString();
 	}
 
 	/**
@@ -176,8 +182,8 @@ public class Die {
 	 * @return a sorted map of the faces to letters
 	 */
 	public SortedMap<Integer, String> getValueMap() {
-		
-		return valueMap;
+		SortedMap<Integer, String> copy = valueMap;
+		return copy;
 	}
 
 	/**
@@ -191,7 +197,7 @@ public class Die {
 	@Override
 	public int hashCode() {
 		
-		return 1;
+		return 0;
 	}
 
 	/**
@@ -274,8 +280,24 @@ public class Die {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		
+		if (this == obj)
+		{
+			return true;
+		}
+		if (obj == null)
+		{
+			return false;
+					}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+			Die other  = (Die) obj;
+		if(this.valueMap != other.valueMap) {
+			return false;
+			
+		}
 		return true;
+		
 	}
 
 	/**
@@ -301,8 +323,16 @@ public class Die {
 	 */
 	@Override
 	public String toString() {
-		
-		return "";
+		String result = "";
+		for (int i = 1; i < valueMap.size(); i++)
+		{ 
+			if (i != valueMap.lastKey()) {
+			result += valueMap.get(i) + ", ";
+		}
+			else
+			result += valueMap.get(i);
+		}
+		return result;
 	}
 
 }
