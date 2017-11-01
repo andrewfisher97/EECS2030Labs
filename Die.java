@@ -314,10 +314,13 @@ public class Die {
 	@Override
 	public String toString() {
 		String representation = "";
-		for (int i = 1; i < valueMap.size(); i++) {
-			representation.concat(valueMap.get(i) + ", ");
+		for (int i = 1; i < valueMap.size() + 1; i++) {
+			if (i == valueMap.size()) {
+				representation = representation.concat(valueMap.get(i));
+			} else {
+				representation = representation.concat(valueMap.get(i) + ", ");
+			}
 		}
-		representation.concat(valueMap.get(valueMap.size()));
 		return representation;
 	}
 
