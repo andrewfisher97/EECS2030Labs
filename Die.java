@@ -1,8 +1,5 @@
 package eecs2030.lab4;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Random;
@@ -93,9 +90,8 @@ public class Die {
 		if (faces.length <= 0) {
 			throw new IllegalArgumentException();
 		} else {
-			valueMap = new TreeMap<Integer, String>();
-			for (int i = 0; i < faces.length; i++) {
-				valueMap.put(i + 1, faces[i]);
+			for (int i = 1; i - 1 < faces.length; i++) {
+				valueMap.put(i, faces[i - 1]);
 			}
 		}
 	}
@@ -111,7 +107,9 @@ public class Die {
 	 *            the die to copy
 	 */
 	public Die(Die other) {
-		this((String[]) other.getValueMap().values().toArray());
+		valueMap = other.valueMap;
+		currentFace = other.currentFace;
+		currentValue = other.currentValue;
 	}
 
 	/**
@@ -130,8 +128,8 @@ public class Die {
 	 */
 	public String roll() {
 		Random rand = new Random();
-		currentFace = rand.nextInt(valueMap.size() - 1) + 1;
-		currentValue = valueMap.get(currentFace);
+		currentFace = rand.nextInt(valueMap.size());
+		currentValue = valueMap.get(currentFace + 1);
 		return currentValue;
 	}
 
@@ -141,7 +139,7 @@ public class Die {
 	 * @return the string corresponding to the current face value of the die
 	 */
 	public String getValue() {
-		return currentValue;
+		return valueMap.get(currentFace + 1);
 	}
 
 	/**
@@ -189,11 +187,11 @@ public class Die {
 	 */
 	@Override
 	public int hashCode() {
-		int count = 0;
-		for (int i = 1; i < valueMap.lastKey(); i++) {
-			count += valueMap.get(i).hashCode();
+		int hashCode = 0;
+		for (int i = 1; i < valueMap.size() + 1; i++) {
+			hashCode += valueMap.get(i).hashCode();
 		}
-		return count;
+		return hashCode;
 	}
 
 	/**
@@ -315,8 +313,12 @@ public class Die {
 	 */
 	@Override
 	public String toString() {
-		
-		return "";
+		String representation = "";
+		for (int i = 1; i < valueMap.size(); i++) {
+			representation.concat(valueMap.get(i) + ", ");
+		}
+		representation.concat(valueMap.get(valueMap.size()));
+		return representation;
 	}
 
 }
