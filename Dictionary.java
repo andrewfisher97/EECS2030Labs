@@ -11,7 +11,7 @@ import java.util.TreeSet;
  */
 public class Dictionary {
 
-	private SortedSet<String> words;
+	private SortedSet<String> words = new TreeSet<String>();
 
 	/**
 	 * Reads the dictionary file and stores the words from the file in the Set
@@ -66,8 +66,7 @@ public class Dictionary {
 	 *         otherwise
 	 */
 	public boolean lookUp(String word) {
-		word.toLowerCase();
-		if (this.words.contains(word)) {
+		if (this.words.contains(word.toLowerCase())) {
 			return true;
 		}
 		return false;
@@ -84,16 +83,18 @@ public class Dictionary {
 	 * @return a new sorted set of words that are in the dictionary and begin
 	 *         with the specified string
 	 */
-	@SuppressWarnings("null")
 	public SortedSet<String> wordsStartingWith(String prefix) {
-		String[] wordsArray = (String[]) this.words.toArray();
-		SortedSet<String> wordsWithPrefix = null;
-		for (int i = 0; i < this.words.size(); i++) {
-			if (wordsArray[i].startsWith(prefix.toLowerCase())) {
-				wordsWithPrefix.add(wordsArray[i]);
+		SortedSet<String> wordsStartingWithPrefix = new TreeSet<String>();
+		InputStream in = this.getClass().getResourceAsStream("dictionary.txt");
+		Scanner dictionaryInput = new Scanner(in);
+		while (dictionaryInput.hasNext()) {
+			String word = dictionaryInput.next();
+			if (word.startsWith(prefix)) {
+				wordsStartingWithPrefix.add(word.trim());
 			}
 		}
-		return wordsWithPrefix;
+		dictionaryInput.close();
+		return wordsStartingWithPrefix;
 	}
 
 }
