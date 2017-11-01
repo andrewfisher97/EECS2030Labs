@@ -11,7 +11,7 @@ import java.util.TreeSet;
  */
 public class Dictionary {
 
-	private SortedSet<String> words = new TreeSet<String>();
+	private SortedSet<String> words;
 
 	/**
 	 * Reads the dictionary file and stores the words from the file in the Set
@@ -42,6 +42,7 @@ public class Dictionary {
 	 * Initializes a dictionary by reading the default dictionary from a file.
 	 */
 	public Dictionary() {
+		words = new TreeSet<String>();
 		readDictionary();
 	}
 

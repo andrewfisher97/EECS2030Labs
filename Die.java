@@ -49,7 +49,7 @@ import java.util.Random;
  */
 public class Die {
 
-	private SortedMap<Integer, String> valueMap = new TreeMap<Integer, String>();;
+	private SortedMap<Integer, String> valueMap;
 	private int currentFace;
 	private String currentValue;
 
@@ -87,6 +87,7 @@ public class Die {
 	 * 
 	 */
 	public Die(String[] faces) {
+		valueMap = new TreeMap<Integer, String>();
 		if (faces.length <= 0) {
 			throw new IllegalArgumentException();
 		} else {
@@ -280,11 +281,14 @@ public class Die {
 			return false;
 		if (this.getClass() != obj.getClass())
 	        return false;
-		if (this.getValueMap() != ((Die) obj).getValueMap())
+		
+		Die other = (Die) obj;
+		
+		if (!this.valueMap.get(this.currentFace + 1).equals(other.valueMap.get(other.currentFace + 1)))
 			return false;
-		if (this.getNumberOfFaces() != ((Die) obj).getNumberOfFaces())
+		if (this.getNumberOfFaces() != other.getNumberOfFaces())
 			return false;
-		if (this.getValue() != ((Die) obj).getValue())
+		if (this.hashCode() != other.hashCode())
 			return false;
 		
 		return true;

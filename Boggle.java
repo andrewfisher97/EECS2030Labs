@@ -52,7 +52,11 @@ public class Boggle {
 	 * 
 	 */
 	public Boggle() {
-		
+		dice = new ArrayList<Die>();
+		for (int i = 0; i < NUMBER_OF_DICE; i++) {
+			dice.add(new Die(LETTERS[i]));
+		}
+		dictionary = new Dictionary();
 	}
 
 	/**
@@ -74,10 +78,11 @@ public class Boggle {
 	 *         dice
 	 */
 	public List<Die> getDice() {
-		
-		List<Die> diceCopy = dice;
-		return diceCopy;
-		
+		List<Die> copy = new ArrayList<Die>();
+		for (int i = 0; i < NUMBER_OF_DICE; i++) {
+			copy.add(dice.get(i));
+		}
+		return copy;
 	}
 
 	/**
