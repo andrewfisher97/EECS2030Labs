@@ -52,7 +52,7 @@ public class Dictionary {
 	 * @return the number of words in the dictionary
 	 */
 	public int size() {
-		return this.words.size();
+		return words.size();
 	}
 
 	/**
@@ -67,7 +67,7 @@ public class Dictionary {
 	 *         otherwise
 	 */
 	public boolean lookUp(String word) {
-		if (this.words.contains(word.toLowerCase())) {
+		if (words.contains(word.toLowerCase())) {
 			return true;
 		}
 		return false;
