@@ -1,8 +1,5 @@
 package eecs2030.lab4;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Random;
@@ -53,6 +50,8 @@ import java.util.Random;
 public class Die {
 
 	private SortedMap<Integer, String> valueMap;
+	private int currentFace;
+	private String currentValue;
 
 	/**
 	 * Initializes an n-sided die where the sides are decorated with the strings in
@@ -88,12 +87,12 @@ public class Die {
 	 * 
 	 */
 	public Die(String[] faces) {
+		valueMap = new TreeMap<Integer, String>();
 		if (faces.length <= 0) {
 			throw new IllegalArgumentException();
 		} else {
-			valueMap = new TreeMap<Integer, String>();
-			for (int i = 0; i < faces.length; i++) {
-				valueMap.put(i, faces[i]);
+			for (int i = 1; i - 1 < faces.length; i++) {
+				valueMap.put(i, faces[i - 1]);
 			}
 		}
 	}
@@ -109,7 +108,9 @@ public class Die {
 	 *            the die to copy
 	 */
 	public Die(Die other) {
-		this(other.valueMap<String>);
+		valueMap = other.valueMap;
+		currentFace = other.currentFace;
+		currentValue = other.currentValue;
 	}
 
 	/**
@@ -118,12 +119,7 @@ public class Die {
 	 * @return the number of faces that this die has
 	 */
 	public int getNumberOfFaces() {
-		int numFace;
-		String[] faces = new String[];
-		for (int i = 0; i < faces.length; i++){
-			numFace++;
-		}
-		return numFace;
+		return valueMap.size();
 	}
 
 	/**
@@ -132,8 +128,10 @@ public class Die {
 	 * @return the string on face after rolling the die
 	 */
 	public String roll() {
-		
-		return "";
+		Random rand = new Random();
+		currentFace = rand.nextInt(valueMap.size());
+		currentValue = valueMap.get(currentFace + 1);
+		return currentValue;
 	}
 
 	/**
@@ -142,8 +140,7 @@ public class Die {
 	 * @return the string corresponding to the current face value of the die
 	 */
 	public String getValue() {
-		
-		return "";
+		return valueMap.get(currentFace + 1);
 	}
 
 	/**
@@ -176,8 +173,9 @@ public class Die {
 	 * @return a sorted map of the faces to letters
 	 */
 	public SortedMap<Integer, String> getValueMap() {
-		
-		return valueMap;
+		SortedMap<Integer, String> copy = new TreeMap<Integer, String>();
+		copy.putAll(valueMap);
+		return copy;
 	}
 
 	/**
@@ -190,8 +188,11 @@ public class Die {
 	 */
 	@Override
 	public int hashCode() {
-		
-		return 1;
+		int hashCode = 0;
+		for (int i = 1; i < valueMap.size() + 1; i++) {
+			hashCode += valueMap.get(i).hashCode();
+		}
+		return hashCode;
 	}
 
 	/**
@@ -274,6 +275,21 @@ public class Die {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+	        return false;
+		
+		Die other = (Die) obj;
+		
+		if (!this.valueMap.get(this.currentFace + 1).equals(other.valueMap.get(other.currentFace + 1)))
+			return false;
+		if (this.getNumberOfFaces() != other.getNumberOfFaces())
+			return false;
+		if (this.hashCode() != other.hashCode())
+			return false;
 		
 		return true;
 	}
@@ -301,8 +317,15 @@ public class Die {
 	 */
 	@Override
 	public String toString() {
-		
-		return "";
+		String representation = "";
+		for (int i = 1; i < valueMap.size() + 1; i++) {
+			if (i == valueMap.size()) {
+				representation = representation.concat(valueMap.get(i));
+			} else {
+				representation = representation.concat(valueMap.get(i) + ", ");
+			}
+		}
+		return representation;
 	}
 
 }
