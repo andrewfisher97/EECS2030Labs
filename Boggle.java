@@ -80,7 +80,7 @@ public class Boggle {
 	public List<Die> getDice() {
 		List<Die> copy = new ArrayList<Die>();
 		for (int i = 0; i < NUMBER_OF_DICE; i++) {
-			copy.add(dice.get(i));
+			copy.add(new Die(dice.get(i)));
 		}
 		return copy;
 	}
@@ -95,12 +95,10 @@ public class Boggle {
 	 * the list.
 	 */
 	public void shuffleAndRoll() {
-		
 		Collections.shuffle(dice);
 		for (int i = 0; i < dice.size(); i++) {
 			dice.get(i).roll();
 		}
-		
 	}
 
 	/**
@@ -114,7 +112,8 @@ public class Boggle {
 	 *         otherwise
 	 */
 	public boolean isABoggleWord(String s) {
-		
+		if (dictionary.lookUp(s) && s.length() >= 3)
+			return true;
 		return false;
 		
 	}
