@@ -52,7 +52,9 @@ import java.util.Random;
  */
 public class Die {
 
-	private SortedMap<Integer, String> valueMap;
+	private SortedMap<Integer, String> valueMap = new TreeMap<Integer, String>();;
+	private int currentFace;
+	private String currentValue;
 
 	/**
 	 * Initializes an n-sided die where the sides are decorated with the strings in
@@ -118,7 +120,7 @@ public class Die {
 	 * @return the number of faces that this die has
 	 */
 	public int getNumberOfFaces() {
-		return valueMap.lastKey();
+		return valueMap.size();
 	}
 
 	/**
@@ -127,8 +129,10 @@ public class Die {
 	 * @return the string on face after rolling the die
 	 */
 	public String roll() {
-		double rand = Math.random() * getNumberOfFaces();
-		return valueMap.get((int) rand);
+		Random rand = new Random();
+		currentFace = rand.nextInt(valueMap.size() - 1) + 1;
+		currentValue = valueMap.get(currentFace);
+		return currentValue;
 	}
 
 	/**
@@ -137,8 +141,7 @@ public class Die {
 	 * @return the string corresponding to the current face value of the die
 	 */
 	public String getValue() {
-		
-		return "";
+		return currentValue;
 	}
 
 	/**
@@ -171,7 +174,8 @@ public class Die {
 	 * @return a sorted map of the faces to letters
 	 */
 	public SortedMap<Integer, String> getValueMap() {
-		SortedMap<Integer, String> copy = valueMap;
+		SortedMap<Integer, String> copy = new TreeMap<Integer, String>();
+		copy.putAll(valueMap);
 		return copy;
 	}
 
@@ -185,8 +189,11 @@ public class Die {
 	 */
 	@Override
 	public int hashCode() {
-		
-		return 1;
+		int count = 0;
+		for (int i = 1; i < valueMap.lastKey(); i++) {
+			count += valueMap.get(i).hashCode();
+		}
+		return count;
 	}
 
 	/**
@@ -269,6 +276,18 @@ public class Die {
 	 */
 	@Override
 	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (this.getClass() != obj.getClass())
+	        return false;
+		if (this.getValueMap() != ((Die) obj).getValueMap())
+			return false;
+		if (this.getNumberOfFaces() != ((Die) obj).getNumberOfFaces())
+			return false;
+		if (this.getValue() != ((Die) obj).getValue())
+			return false;
 		
 		return true;
 	}
