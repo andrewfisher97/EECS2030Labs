@@ -136,17 +136,17 @@ public class LinkedIntList {
 	 * @return true (to be consistent with java.util.Collection)
 	 */
 	public boolean add(int elem) {
-		Node newNode = new Node();
+		Node newNode = new Node(); 
 		newNode.setData(elem);
-		size++;
-		if (size == 1) {
+		if (size == 0) {
 			head = newNode;
-		} else if (size == 2) {
+		} else if (size == 1) {
 			head.setNext(newNode);
-		} else if (size > 2) {
+		} else if (size > 1) {
 			tail.setNext(newNode);
 		}
 		tail = newNode;
+		size++;
 		return true;
 	}
 	
@@ -171,10 +171,17 @@ public class LinkedIntList {
 	 *             list
 	 */
 	public Node getNode(int index) {
-		
-		
-		
-		return null;
+		checkIndex(index);
+		if (index == 0)
+			return head;
+		else {
+			Node travellor = new Node();
+			travellor.setNext(head.getNext());
+			for (int i = 0; i < index; i++) {
+				travellor = travellor.getNext();
+			}
+			return travellor;
+		}
 	}
 
 
@@ -188,10 +195,8 @@ public class LinkedIntList {
 	 *             if (index &lt; 0) || (index &gt; size - 1)
 	 */
 	public int get(int index) {
-		
-		
-		
-		return 0;
+		checkIndex(index);
+		return getNode(index).getData();
 	}
 
 	/**
@@ -207,10 +212,10 @@ public class LinkedIntList {
 	 *             if (index &lt; 0) || (index &gt; size - 1)
 	 */
 	public int set(int index, int elem) {
-		
-		
-		
-		return 0;
+		checkIndex(index);
+		int oldElem = get(index);
+		getNode(index).setData(elem);
+		return oldElem;
 	}
 
 	/**
@@ -220,9 +225,11 @@ public class LinkedIntList {
 	 *            the element to insert at the front of this list
 	 */
 	public void addFirst(int elem) {
-		
-		
-		
+		Node newHead = new Node(elem, head);
+		head = newHead;
+		if (size == 0)
+			tail = head;
+		size++;
 	}
 
 	/**
@@ -244,9 +251,7 @@ public class LinkedIntList {
 	 *             if the index is out of range (index &lt; 0 || index &gt; size())
 	 */
 	public void add(int index, int elem) {
-		
-		
-		
+		checkIndex(index);
 	}
 
 	/**
@@ -257,8 +262,6 @@ public class LinkedIntList {
 	 *             if this list is empty
 	 */
 	public int removeFirst() {
-		
-		
 		return 0;
 	}
 
@@ -270,8 +273,6 @@ public class LinkedIntList {
 	 *             if this list is empty
 	 */
 	public int removeLast() {
-		
-		
 		return 0;
 	}
 
@@ -294,8 +295,6 @@ public class LinkedIntList {
 	 *          if the index is out of range (index &lt; 0 || index &gt;= size())
 	 */
 	public int remove(int index) {
-		
-		
 		return 0;
 	}
 
@@ -325,8 +324,6 @@ public class LinkedIntList {
 	 *          if n is out of range (n &lt; 0 || n &gt; size())
 	 */
 	public void shiftRight(int n) {
-		
-		
 		
 	}
 }
