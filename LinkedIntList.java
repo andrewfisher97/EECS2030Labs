@@ -174,10 +174,7 @@ public class LinkedIntList {
 	 *             list
 	 */
 	public Node getNode(int index) {
-		if (index < 0  || index >= this.size)
-		{
-			throw new IndexOutOfBoundsException("UNAACEPTABLE!");
-		}
+		this.checkIndex(index);
 		Node n = this.head;
 			if (index == 0) {
 			return n;
@@ -235,41 +232,14 @@ public class LinkedIntList {
 	 *            the element to insert at the front of this list
 	 */
 	public void addFirst(int elem) {
-//		Node n = new Node();
-//		n = this.head;
-//		size++;
-//		
-//		if (this.head == null) {
-//			head.setNext(head);
-//			head.setData(elem);	
-//		
-//			
-//		}
-//		else {
-//			for (int i = 0; i< this.size; i++)
-//			{
-//				n.setNext(n);
-//				n = n.getNext();
-//			}
-//			n.setData(elem);
-//		}
-//		
-		Node n = new Node();
-		n = head;
-//		n.setData(elem);
-//		head = n;
-		
-		for (int i = 0; i  < this.size; i++) {
-//			n = n.getNext();
-//			n.setNext(n);
-			n.getNext().setNext(n.getNext());
-			head.setData(elem);
-		
+		this.head = new Node(elem, this.head());
+		if (this.tail() == null) {
+			this.tail = this.head();
 		}
-				//head.setData(elem);
-		
-		
-	}
+		this.size++;
+			}
+			
+
 
 	/**
 	 * Inserts the specified element at the specified position in this list. Shifts
@@ -289,9 +259,18 @@ public class LinkedIntList {
 	 * @throws IndexOutOfBoundsException
 	 *             if the index is out of range (index &lt; 0 || index &gt; size())
 	 */
-	public void add(int index, int elem) {
-		
-		
+	public void add(int index, int elem) {	 
+		if (index == 0) {
+			this.addFirst(elem);
+		}
+		else if (index == this.size()) {
+			this.add(elem);
+		}
+		else {
+			Node newNode = new Node(elem, this.getNode(index));
+			this.getNode(index-1).setNext(newNode);
+			this.size++;
+		}
 		
 	}
 
@@ -303,9 +282,15 @@ public class LinkedIntList {
 	 *             if this list is empty
 	 */
 	public int removeFirst() {
+		this.checkNotEmpty();
+		int n = this.head.getData();
+		this.head = this.head.getNext();
+		if (this.size() == 1) {
+			this.tail = null;
+		}
+		size--;
+		return n;
 		
-		
-		return 0;
 	}
 
 	/**
@@ -316,9 +301,19 @@ public class LinkedIntList {
 	 *             if this list is empty
 	 */
 	public int removeLast() {
-		
-		
-		return 0;
+		this.checkNotEmpty();
+		int n = this.tail.getData();		
+		if (this.size() == 1) {
+			this.tail = null;
+			this.head = null;
+			size = 0;
+			return n;	
+		}
+		this.tail = this.getNode(size-2);
+		this.tail.setNext(null);
+		size--;
+		return n;
+	
 	}
 
 	/**
@@ -340,9 +335,23 @@ public class LinkedIntList {
 	 *          if the index is out of range (index &lt; 0 || index &gt;= size())
 	 */
 	public int remove(int index) {
+		this.checkIndex(index);
+		int result = this.get(index);
+		if (index == 0) {
+			this.removeFirst();
+			return result;
+			}
+		 if (index == this.size()-1) {
+			this.removeLast();
+			return result;
+		}
+			
+			this.getNode(index-1).setNext(this.getNode(index).getNext());
+			this.size--;
+		return result;
 		
 		
-		return 0;
+		
 	}
 
 	
@@ -371,8 +380,14 @@ public class LinkedIntList {
 	 *          if n is out of range (n &lt; 0 || n &gt; size())
 	 */
 	public void shiftRight(int n) {
-		
-		
+		if (n < 0 || n > this.size ) {
+			throw new IndexOutOfBoundsException(String.format("index: %d, size: %d", n, this.size));
+		}
+		for(int i = 0; i < n; i++)
+		{
+			int r = this.removeLast();
+			this.addFirst(r);
+		}
 		
 	}
 }
