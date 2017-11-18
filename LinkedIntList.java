@@ -120,7 +120,7 @@ public class LinkedIntList {
 	 * @return true if the size of this list is zero, and false otherwise
 	 */
 	public boolean isEmpty() {
-		if (size == 0)
+		if (size() == 0)
 			return true;
 		return false;
 	}
@@ -138,11 +138,11 @@ public class LinkedIntList {
 	public boolean add(int elem) {
 		Node newNode = new Node(); 
 		newNode.setData(elem);
-		if (size == 0) {
+		if (size() == 0) {
 			head = newNode;
-		} else if (size == 1) {
+		} else if (size() == 1) {
 			head.setNext(newNode);
-		} else if (size > 1) {
+		} else if (size() > 1) {
 			tail.setNext(newNode);
 		}
 		tail = newNode;
@@ -227,7 +227,7 @@ public class LinkedIntList {
 	public void addFirst(int elem) {
 		Node newHead = new Node(elem, head);
 		head = newHead;
-		if (size == 0)
+		if (size() == 0)
 			tail = head;
 		size++;
 	}
@@ -251,7 +251,17 @@ public class LinkedIntList {
 	 *             if the index is out of range (index &lt; 0 || index &gt; size())
 	 */
 	public void add(int index, int elem) {
-		checkIndex(index);
+		if (index < 0 || index > size)
+			throw new IndexOutOfBoundsException();
+		if (index == 0)
+			addFirst(elem);
+		else if (index == size())
+			add(elem);
+		else {
+			Node newNode = new Node(elem, getNode(index));
+			getNode(index - 1).setNext(newNode);
+			size++;
+		}
 	}
 
 	/**
@@ -262,7 +272,13 @@ public class LinkedIntList {
 	 *             if this list is empty
 	 */
 	public int removeFirst() {
-		return 0;
+		checkNotEmpty();
+		int firstElem = head.getData();
+		head = head.getNext();
+		if (size() == 1)
+			tail = null;
+		size--;
+		return firstElem;
 	}
 
 	/**
@@ -273,7 +289,18 @@ public class LinkedIntList {
 	 *             if this list is empty
 	 */
 	public int removeLast() {
-		return 0;
+		checkNotEmpty();
+		int lastElem = tail.getData();
+		if (size() == 1) {
+			 tail = null;
+			 head = null;
+			 size = 0;
+			 return lastElem;
+		}
+		tail = getNode(size - 2);
+		tail.setNext(null);
+		size--;
+		return lastElem;
 	}
 
 	/**
@@ -295,7 +322,19 @@ public class LinkedIntList {
 	 *          if the index is out of range (index &lt; 0 || index &gt;= size())
 	 */
 	public int remove(int index) {
-		return 0;
+		checkIndex(index);
+		int result = get(index);
+		if (index == 0) {
+			removeFirst();
+			return result;
+		}
+		if (index == size() - 1) {
+			removeLast();
+			return result;
+		}
+		getNode(index - 1).setNext(getNode(index).getNext());
+		size--;
+		return result;
 	}
 
 	
@@ -324,6 +363,12 @@ public class LinkedIntList {
 	 *          if n is out of range (n &lt; 0 || n &gt; size())
 	 */
 	public void shiftRight(int n) {
-		
+		if (n < 0 || n > size()) {
+			throw new IllegalArgumentException();
+		}
+		for (int i = 0; i < n; i++) {
+			int r = removeLast();
+			addFirst(r);
+		}
 	}
 }
