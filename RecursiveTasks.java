@@ -2,7 +2,6 @@ package eecs2030.lab6;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * A utility class containing several recursive methods (Lab 6, F2017)
@@ -39,30 +38,19 @@ public final class RecursiveTasks {
 	 * @return a string made only of the parenthesis and their contents (from str)
 	 */
 	public static String getParenthesis(String str) {
-		if(str.length() == 0) {
-			return null;
-		}		
-		if(str.startsWith("(") && str.endsWith(")"))
-		{
-		return str;
-		}
-		if (!str.startsWith("("))
-		{
-			str = str.substring(1, str.length());
-			//System.out.println(str);
-			return RecursiveTasks.getParenthesis(str);
-
-		}
-		else if(!str.endsWith(")"))
-		 {
-			 str = str.substring(0, str.length() - 1);
-				//System.out.println(str);
-			return  RecursiveTasks.getParenthesis(str);
-		 }		
-		
+		if(str.length() == 0)
+			return null;	
+		else if(str.startsWith("(") && str.endsWith(")"))
 			return str;
-
-			}
+		else if (!str.startsWith("(")) {
+			str = str.substring(1, str.length());
+			return getParenthesis(str);
+		} else if (!str.endsWith(")")) {
+			str = str.substring(0, str.length() - 1);
+			return getParenthesis(str);
+		}		
+		return str;
+	}
 	
 
 	/**
@@ -82,30 +70,19 @@ public final class RecursiveTasks {
 	 * 
 	 */
 	public static int numOccurrences(String str, String sub) {
-		if (str.equals(sub))
-		{			
+		if (str.length() < sub.length())
+			return 0;
+		else if (str.equals(sub))
 			return 1;
+		else if (str.substring(0, sub.length()).equals(sub)) {
+			str = str.substring(sub.length(), str.length());
+			numOccurrences(str, sub);
+			return 1 + numOccurrences(str, sub);
+		} else {
+			str = str.substring(1, str.length());
+			numOccurrences(str, sub);
+			return 0 + numOccurrences(str, sub);
 		}
-		if (str.length() < sub.length() )
-		{
-			 return 0;
-		}
-		if(str.startsWith(sub))
-			{
-				return 1+ RecursiveTasks.numOccurrences(str.substring(sub.length(), str.length()), sub);
-				
-			}
-		if(str.endsWith(sub))
-		{
-			return 1+ RecursiveTasks.numOccurrences(str.substring(0, str.length()-sub.length()), sub);
-			
-		}
-		else 
-		{	
-			return RecursiveTasks.numOccurrences(str.substring(1, str.length()), sub);
-		}
-		
-
 	}
 
 	
@@ -131,29 +108,13 @@ public final class RecursiveTasks {
 	 * @return a boolean value indicating true if the string contains nested and balanced parenthesis, false otherwise
 	 */
 	public static boolean parenthIsNested(String str) {
-	
-		if(str.startsWith("(") && str.endsWith(")"))
-				{
-						return RecursiveTasks.parenthIsNested(str.substring(1, str.length()-1));
-				}
-		if (str.startsWith("(") && !str.endsWith(")"))
-		{
-			return false;
-		}
-		if (!str.startsWith("(") && str.endsWith(")"))
-		{
-			return false;
-		}
-		if (str.startsWith("(") && str.endsWith(")") && str.length() == 2)
-		{
+		if (str.equals(""))
 			return true;
+		else if (str.startsWith("(") && str.endsWith(")")) {
+			str = str.substring(1, str.length() - 1);
+			return parenthIsNested(str);
 		}
-		if (str.length() % 2 != 0)	// if the size is  odd then mostlikely a base case 
-		{
-			return false;
-		}
-		return true;
-
+		return false;
 	}
 
 
@@ -191,14 +152,18 @@ public final class RecursiveTasks {
 	 * @param n number of recursive steps to generate circles for
 	 * @param mode a boolean array [left right up down] indicating which of the 4 circles will be recursed on
 	 */
-	public static void genFractal(List<Circle> circles, int x, int y, int radius, int n, boolean [] mode) {
-
-		// CODE HERE
-
+	public static void genFractal(List<Circle> circles, int x, int y, int radius, int n, boolean[] mode) {
+		radius = radius / 2;
+		// base case
+		circles.add(new Circle(x + 2 * radius, y, radius));
+		circles.add(new Circle(x - 2 * radius, y, radius));
+		circles.add(new Circle(x, y + 2 * radius, radius));
+		circles.add(new Circle(x, y - 2 * radius, radius));
+		n--;
+		if (n > 0)
+			genFractal(circles, x, y, radius, n, mode);
 		return;
-
 	}
-	
 	
 	/**
 	 * Calculate and determine if there exists a sum of (some) of the elements in an integer
@@ -224,17 +189,20 @@ public final class RecursiveTasks {
 	 * @return a boolean value indicating that a sum of some of the integers in nums equals the target
 	 */
 	public static boolean sumSome(int index, int[] nums, int sum, int target) {
-	
-	
-	
+		if (nums.length < 1 && target == sum) {
+			return true;
+		} else if (nums.length > 0) {
+			sum += nums[index];
+			// System.out.println(sum);
+			// System.out.println(target);
+			int[] newNums = new int[nums.length - 1];
+			for (int i = 1; i < nums.length; i++) {
+				newNums[i - 1] = nums[i];
+			}
+			nums = newNums;
+			sumSome(0, nums, sum, target);
+		}
 		return false;
 	}
-
-	
-	
-
-			
-
-
 
 }
