@@ -153,15 +153,21 @@ public final class RecursiveTasks {
 	 * @param mode a boolean array [left right up down] indicating which of the 4 circles will be recursed on
 	 */
 	public static void genFractal(List<Circle> circles, int x, int y, int radius, int n, boolean[] mode) {
-		radius = radius / 2;
-		// base case
-		circles.add(new Circle(x + 2 * radius, y, radius));
-		circles.add(new Circle(x - 2 * radius, y, radius));
-		circles.add(new Circle(x, y + 2 * radius, radius));
-		circles.add(new Circle(x, y - 2 * radius, radius));
+		circles.add(new Circle(x + radius, y, radius / 2));
+		circles.add(new Circle(x - radius, y, radius / 2));
+		circles.add(new Circle(x, y + radius, radius / 2));
+		circles.add(new Circle(x, y - radius, radius / 2));
 		n--;
-		if (n > 0)
-			genFractal(circles, x, y, radius, n, mode);
+		if (n > 0) {
+			if (mode[0] == true)
+				genFractal(circles, x - radius, y, radius / 2, n, mode);
+			if (mode[1] == true)
+				genFractal(circles, x + radius, y, radius / 2, n, mode);
+			if (mode[2] == true)
+				genFractal(circles, x, y + radius, radius / 2, n, mode);
+			if (mode[3] == true)
+				genFractal(circles, x, y - radius, radius / 2, n, mode);
+		}
 		return;
 	}
 	
@@ -189,20 +195,12 @@ public final class RecursiveTasks {
 	 * @return a boolean value indicating that a sum of some of the integers in nums equals the target
 	 */
 	public static boolean sumSome(int index, int[] nums, int sum, int target) {
-		if (nums.length < 1 && target == sum) {
+		if (target == sum) {
 			return true;
-		} else if (nums.length > 0) {
-			sum += nums[index];
-			// System.out.println(sum);
-			// System.out.println(target);
-			int[] newNums = new int[nums.length - 1];
-			for (int i = 1; i < nums.length; i++) {
-				newNums[i - 1] = nums[i];
-			}
-			nums = newNums;
-			sumSome(0, nums, sum, target);
+		} else if (index >= nums.length) {
+			return false;
 		}
-		return false;
+		return (sumSome(index + 1, nums, sum + nums[index], target)) || (sumSome(index + 1, nums, sum, target));
 	}
 
 }
